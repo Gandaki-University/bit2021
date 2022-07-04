@@ -12,49 +12,51 @@
   <h1>Forms validation using JS</h1>
 
   <form action="javascript:(void);">
-    <label for="fname">First Name</label>
-    <input type="text" name="fname" id="fname">
+    <label for="fname" id="label_fname">First Name</label>
+    <input type="text" name="fname" id="fname"><br/>
     <label for="lname">Last Name</label>
-    <input type="text" name="lname" id="lname">
+    <input type="text" name="lname" id="lname"><br/>
     <label for="email"> Email Address </label>
-    <input type="email" name="email" />
+    <input type="email" name="email" /><br/>
     <label for="district">District</label>
     <select name="district" id="district">
       <option value="53001">Kaski</option>
       <option value="53002">Lamjung</option>
       <option value="53004">Tanahun</option>
-    </select>
+    </select><br/>
     <label for="state">State (प्रदेश)</label>
     <select name="state" id="state">
       <option value="1">Province No. 1</option>
       <option value="2">Madhesh Province</option>
       <option value="3">Bagmati Province</option>
       <option value="4">Gandaki Province</option>
-    </select>
+    </select><br/>
     <label for="paswd">Enter Password</label>
-    <input type="password" name='paswd' id='confPaswd'>
+    <input type="password" name='paswd' id='pasw'><br/>
     <label for="confPaswd">Reenter the password</label>
-    <input type="password" name='confPaswd' id='confPaswd'>
-    <button type = 'submit'>Submit the submission</button>
+    <input type="password" name='confPaswd' id='confPaswd'><br/>
+    <button type = 'submit' onclick="showValues();">Submit the submission</button><br/>
     <button type='reset'>Reset All Fields</button>
   </form>
   </style>
   <script type="text/javascript">
-    var item, amount;
-    var quantity, price;
+    function showValues() {
+      let x = {};
+      x['fname'] = document.getElementById('fname').value;
+      if (x['fname'] == "RAM"){
+        document.getElementById('label_fname').style.color = "red";
+      }
+      x['passwd'] = document.getElementById('pasw').value;
+      x['confPaswd'] = document.getElementById('confPaswd').value;
+      if(x['passwd'] !== x['confPaswd']){
+        alert("The passwords don't match!! Reenter the password");
+      } else{
+        alert("The passwords match! ")
+      }
 
-    console.log("This is when all the variables have been delclared");
-    console.log(item, amount, quantity, price);
-    item = "Rice";
-    quantity = 8;
-    price = 120;
-    amount = quantity * price;
 
-    document.write("<p> We bought " + item + " at the price of " + price + " and paid a total of NRs." + amount +
-    "<p>");
-
-    console.log("We bought " + item + " at the price of " + amount + " and got a total " + quantity + "kg")
-    document.write("<h1> Hello Gandaki University Students from 2nd Semester </h1>");
+      console.log(x);
+    }
   </script>
 </body>
 
