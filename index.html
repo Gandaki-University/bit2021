@@ -35,9 +35,9 @@
     <select name="municipality" id="mun">
 
     </select>
-    <label for="paswd">Enter Password</label>
+    <label for="paswd" id="label_paswd">Enter Password</label>
     <input type="password" name='paswd' id='pasw'><br/>
-    <label for="confPaswd">Reenter the password</label>
+    <label for="confPaswd" id="label_confPaswd">Reenter the password</label>
     <input type="password" name='confPaswd' id='confPaswd'><br/>
     <button type = 'submit' onclick="showValues();">Submit the submission</button><br/>
     <button type='reset'>Reset All Fields</button>
@@ -49,25 +49,40 @@
     <li>Try to complete the list of district, state and municipality</li>
   </ul>
 
-  <h1 style="color: red;">Good Lucks</h1>
+  <h1 style="color: red;">Solve the remaining</h1>
   </style>
   <script type="text/javascript">
     function showValues() {
       let x = {};
       x['fname'] = document.getElementById('fname').value;
+      x['lname'] = document.getElementById('lname').value;
+      if ((x['fname'] != "") && (x['lname'] != "")){
+        alert("mandatory fields of First Name and Last Name");
+      }
+
       if (x['fname'] == "RAM"){
         document.getElementById('label_fname').style.color = "red";
       }
       x['passwd'] = document.getElementById('pasw').value;
       x['confPaswd'] = document.getElementById('confPaswd').value;
+
+
       if(x['passwd'] !== x['confPaswd']){
         alert("The passwords don't match!! Reenter the password");
+        makeRed('label_paswd', 'red');
+        makeRed('label_confPaswd', 'red');
       } else{
         alert("The passwords match! ")
+        makeRed('label_paswd', 'black');
+        makeRed('label_confPaswd', 'black');
       }
 
 
       console.log(x);
+    }
+
+    function makeRed(label, color) {
+      document.getElementById(label).style.color = color;
     }
   </script>
 </body>
