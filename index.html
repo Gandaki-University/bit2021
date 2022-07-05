@@ -13,33 +13,107 @@
 
   <form action="javascript:(void);">
     <label for="fname" id="label_fname">First Name</label>
-    <input type="text" name="fname" id="fname"><br/>
+    <input type="text" name="fname" id="fname"><br />
     <label for="lname">Last Name</label>
-    <input type="text" name="lname" id="lname"><br/>
+    <input type="text" name="lname" id="lname"><br />
     <label for="email"> Email Address </label>
-    <input type="email" name="email" /><br/>
+    <input type="email" name="email" /><br />
     <label for="district">District</label>
     <select name="district" id="district">
-      <option value="53001">Kaski</option>
+      <!-- <option value="53001">Kaski</option>
       <option value="53002">Lamjung</option>
-      <option value="53004">Tanahun</option>
-    </select><br/>
+      <option value="53004">Tanahun</option> -->
+      <!-- <option class="sf-level-0 sf-item-0 sf-option-active" selected="selected" data-sf-depth="0" value="">All Districts</option> -->
+      <option value="Bhojpur">Bhojpur&nbsp;&nbsp;(2)</option>
+      <option value="Dhankuta">Dhankuta&nbsp;&nbsp;(2)</option>
+      <option value="Ilam">Ilam&nbsp;&nbsp;(4)</option>
+      <option value="Jhapa">Jhapa&nbsp;&nbsp;(8)</option>
+      <option value="Khotang">Khotang&nbsp;&nbsp;(2)</option>
+      <option value="Morang">Morang&nbsp;&nbsp;(9)</option>
+      <option value="Okhaldhunga">Okhaldhunga&nbsp;&nbsp;(1)</option>
+      <option value="Panchthar">Panchthar&nbsp;&nbsp;(1)</option>
+      <option value="Sankhuwasabha">Sankhuwasabha&nbsp;&nbsp;(4)</option>
+      <option value="Solukhumbu">Solukhumbu&nbsp;&nbsp;(1)</option>
+      <option value="Sunsari">Sunsari&nbsp;&nbsp;(6)</option>
+      <option value="Taplejung">Taplejung&nbsp;&nbsp;(1)</option>
+      <option value="Terhathum">Terhathum&nbsp;&nbsp;(2)</option>
+      <option value="Udayapur">Udayapur&nbsp;&nbsp;(4)</option>
+      <option value="Bara">Bara&nbsp;&nbsp;(7)</option>
+      <option value="Dhanusha">Dhanusha&nbsp;&nbsp;(12)</option>
+      <option value="Mahottari">Mahottari&nbsp;&nbsp;(10)</option>
+      <option value="Parsa">Parsa&nbsp;&nbsp;(4)</option>
+      <option value="Rautahat">Rautahat&nbsp;&nbsp;(16)</option>
+      <option value="Saptari">Saptari&nbsp;&nbsp;(9)</option>
+      <option value="Sarlahi">Sarlahi&nbsp;&nbsp;(11)</option>
+      <option value="Siraha">Siraha&nbsp;&nbsp;(8)</option>
+      <option value="Bhaktapur">Bhaktapur&nbsp;&nbsp;(4)</option>
+      <option value="Chitwan">Chitwan&nbsp;&nbsp;(6)</option>
+      <option value="Dhading">Dhading&nbsp;&nbsp;(2)</option>
+      <option value="Dolakha">Dolakha&nbsp;&nbsp;(2)</option>
+      <option value="Kathmandu">Kathmandu&nbsp;&nbsp;(11)</option>
+      <option value="Kavrepalanchowk">Kavrepalanchowk&nbsp;&nbsp;(6)</option>
+      <option value="Lalitpur">Lalitpur&nbsp;&nbsp;(3)</option>
+      <option value="Makwanpur">Makwanpur&nbsp;&nbsp;(2)</option>
+      <option value="Nuwakot">Nuwakot&nbsp;&nbsp;(2)</option>
+      <option value="Ramechhap">Ramechhap&nbsp;&nbsp;(2)</option>
+      <option value="Sindhuli">Sindhuli&nbsp;&nbsp;(2)</option>
+      <option value="Sindhupalchowk">Sindhupalchowk&nbsp;&nbsp;(3)</option>
+      <option value="Baglung">Baglung&nbsp;&nbsp;(4)</option>
+      <option value="Gorkha">Gorkha&nbsp;&nbsp;(2)</option>
+      <option value="Kaski">Kaski&nbsp;&nbsp;(1)</option>
+      <option value="Lamjung">Lamjung&nbsp;&nbsp;(4)</option>
+      <option value="Myagdi">Myagdi&nbsp;&nbsp;(1)</option>
+      <option value="Nawalparasi (East of Bardaghat Susta)">Nawalparasi (East of Bardaghat Susta)&nbsp;&nbsp;(4)
+      </option>
+      <option value="Parbat">Parbat&nbsp;&nbsp;(2)</option>
+      <option value="Syangja">Syangja&nbsp;&nbsp;(5)</option>
+      <option value="Tanahun">Tanahun&nbsp;&nbsp;(4)</option>
+      <option value="Arghakhanchi">Arghakhanchi&nbsp;&nbsp;(3)</option>
+      <option value="Banke">Banke&nbsp;&nbsp;(2)</option>
+      <option value="Bardiya">Bardiya&nbsp;&nbsp;(6)</option>
+      <option value="Dang">Dang&nbsp;&nbsp;(3)</option>
+      <option value="Gulmi">Gulmi&nbsp;&nbsp;(2)</option>
+      <option value="Kapilvastu">Kapilvastu&nbsp;&nbsp;(6)</option>
+      <option value="Nawalparasi (Bardaghat Susta West)">Nawalparasi (Bardaghat Susta West)&nbsp;&nbsp;(3)</option>
+      <option value="Palpa">Palpa&nbsp;&nbsp;(2)</option>
+      <option value="Pyuthan">Pyuthan&nbsp;&nbsp;(2)</option>
+      <option value="Rolpa">Rolpa&nbsp;&nbsp;(1)</option>
+      <option value="Rupandehi">Rupandehi&nbsp;&nbsp;(6)</option>
+      <option value="Dailekh">Dailekh&nbsp;&nbsp;(4)</option>
+      <option value="Dolpa">Dolpa&nbsp;&nbsp;(2)</option>
+      <option value="Jajarkot">Jajarkot&nbsp;&nbsp;(3)</option>
+      <option value="Jumla">Jumla&nbsp;&nbsp;(1)</option>
+      <option value="Kalikot">Kalikot&nbsp;&nbsp;(3)</option>
+      <option value="Mugu">Mugu&nbsp;&nbsp;(1)</option>
+      <option value="Rukum Paschim">Rukum Paschim&nbsp;&nbsp;(3)</option>
+      <option value="Salyan">Salyan&nbsp;&nbsp;(3)</option>
+      <option value="Surkhet">Surkhet&nbsp;&nbsp;(5)</option>
+      <option value="Achham">Achham&nbsp;&nbsp;(4)</option>
+      <option value="Baitadi">Baitadi&nbsp;&nbsp;(4)</option>
+      <option value="Bajhang">Bajhang&nbsp;&nbsp;(2)</option>
+      <option value="Bajura">Bajura&nbsp;&nbsp;(4)</option>
+      <option value="Dadeldhura">Dadeldhura&nbsp;&nbsp;(2)</option>
+      <option value="Darchula">Darchula&nbsp;&nbsp;(2)</option>
+      <option value="Doti">Doti&nbsp;&nbsp;(2)</option>
+      <option value="Kailali">Kailali&nbsp;&nbsp;(7)</option>
+      <option value="Kanchanpur">Kanchanpur&nbsp;&nbsp;(6)</option>
+    </select><br />
     <label for="state">State (प्रदेश)</label>
     <select name="state" id="state">
       <option value="1">Province No. 1</option>
       <option value="2">Madhesh Province</option>
       <option value="3">Bagmati Province</option>
       <option value="4">Gandaki Province</option>
-    </select><br/>
+    </select><br />
     <label for="mun">Municipality</label>
     <select name="municipality" id="mun">
-
+      <option value=""></option>
     </select>
     <label for="paswd" id="label_paswd">Enter Password</label>
-    <input type="password" name='paswd' id='pasw'><br/>
+    <input type="password" name='paswd' id='pasw'><br />
     <label for="confPaswd" id="label_confPaswd">Reenter the password</label>
-    <input type="password" name='confPaswd' id='confPaswd'><br/>
-    <button type = 'submit' onclick="showValues();">Submit the submission</button><br/>
+    <input type="password" name='confPaswd' id='confPaswd'><br />
+    <button type='submit' onclick="showValues();">Submit the submission</button><br />
     <button type='reset'>Reset All Fields</button>
   </form>
   <h2>Things to Do</h2>
@@ -56,22 +130,22 @@
       let x = {};
       x['fname'] = document.getElementById('fname').value;
       x['lname'] = document.getElementById('lname').value;
-      if ((x['fname'] != "") && (x['lname'] != "")){
+      if ((x['fname'] != "") && (x['lname'] != "")) {
         alert("mandatory fields of First Name and Last Name");
       }
 
-      if (x['fname'] == "RAM"){
+      if (x['fname'] == "RAM") {
         document.getElementById('label_fname').style.color = "red";
       }
       x['passwd'] = document.getElementById('pasw').value;
       x['confPaswd'] = document.getElementById('confPaswd').value;
 
 
-      if(x['passwd'] !== x['confPaswd']){
+      if (x['passwd'] !== x['confPaswd']) {
         alert("The passwords don't match!! Reenter the password");
         makeRed('label_paswd', 'red');
         makeRed('label_confPaswd', 'red');
-      } else{
+      } else {
         alert("The passwords match! ")
         makeRed('label_paswd', 'black');
         makeRed('label_confPaswd', 'black');
