@@ -1,0 +1,21 @@
+#wrap{
+    display: flex;
+}
+div{
+    /* display: inline; */
+}
+#nav{
+    width:30%;
+    /* width: 100px; */
+  /* height: 100px; */
+  padding: 5px;
+  border: 1px solid blue;  
+  background-color: yellow; 
+    display: block;
+}
+#content{
+    width: 70%;
+    border: 1px solid blue;  
+  background-color: yellow; 
+    display: block;
+}

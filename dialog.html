@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz with JS</title>
+</head>
+<body>
+    <script>
+        let score = 0;
+
+        function start_game(){
+            alert('The game has started. Stay tuned');
+        }
+
+        function play1(){
+            let x = confirm("Is 10 x 20 equals to 300");
+            if(x){
+
+            } else{
+                score += 10;
+            }
+        }
+
+        function play2(){
+            let x = prompt("What is 312 x 12 equal to?");
+            if(x == (312 * 12)){
+                score += 20;
+            }
+        }
+
+        function showResult(){
+            let z = prompt("Enter your Name");
+            alert(" Hello " + z + " You got a total score of " + score);
+        }
+        
+        function play3(){
+            let x = prompt("What equals in the evaluation of (101 OR 110)?");
+            if (x == 100){
+                score += 30;
+            }
+        }
+    </script>
+    <h1>Welcome to Gandaki Quiz</h1>
+    <p>You are welcome to the quiz session. Please click "Start" to start the game</p>
+    <button onclick="start_game()">Start</button>
+    <ul>
+        <li> <button onclick="play1();">Play 1</button> Is 10x20 = 300?</li>
+        <li><button onclick="play2();">Play 2</button> What is 312 x 12 equals?</li>
+        <li><button onclick="play3();">Play 3</button> What equals in the evaluation of (101 OR 110)</li>
+
+    </ul>
+    <button onclick="showResult();">Calculate Score</button>
+</body>
+</html>
