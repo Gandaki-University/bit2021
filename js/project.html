@@ -1,0 +1,60 @@
+<html>
+  <title>
+
+  </title>
+  <body>
+    <h1>List of Projects</h1>
+    <ul>
+      <li>The Online Clothing Store <span class=interactivity>Add to Cart (Discount, Quantity, Price, Variations, Availability)</span></li>
+      <script>
+        let myItems=[
+        {name:"Galbandi", discount:10, pricePerItem: 330, noOfAvailableItems: 30},
+        ]
+        let pricePerItem = 1200;
+        let discount = 20;
+        let discounted_price = (100-discount)/100 * pricePerItem;
+        let numberOfItems = 1;
+      </script>
+      <li>Online Food Ordering</li>
+      <li>Library Management System</li>
+      <li>Quiz</li>
+      <li>Airline</li>
+      <li>Hotel Website</li>
+      <li>School Management System</li>
+    </ul>
+  <h2>Product Features</h2>
+  <ul class='product'>
+    <li>Number of Items : <input type="number" id="Qty" onchange="update();"/> </li>
+    <li>
+      <img src="xyz"/>
+    </li>
+    <li id="originalPrice" style="text-decoration: line-through;"></li>
+    <li id="discount"></li>
+    <li id="discounted_price"></li>
+    <li id="priceTotal"></li>
+  </ul>
+
+  <h3>Tasks</h3>
+  <ul>
+    <li>Make a class Item with attributes: name, noOfAvailableItems, discount, pricePerItem </li>
+    <li>Create a list of items using Class Item </li>
+    <li>Learn to create element under div id = "ShopItems"</li>
+    <li>Populate the items description</li>
+  </ul>
+
+  <script>
+    let a = document.getElementById('originalPrice');
+    a.innerText = "NPR " + pricePerItem;
+    let b = document.getElementById('discount');
+    b.innerText = discount + " %";
+    let c = document.getElementById('discounted_price');
+    c.innerText = "NPR " + discounted_price;
+    function update(){
+      let d = document.getElementById('priceTotal');
+      d.innerText = "NPR " + discounted_price * document.getElementById("Qty").value ;
+    }
+    let d = document.getElementById('priceTotal');
+    d.innerText = "NPR " + discounted_price * numberOfItems ;
+  </script>
+  </body>
+</html>
