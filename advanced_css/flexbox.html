@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>Flexbox</title>
+    <style>
+      .coldiv {
+      	display: flex;
+      	flex-direction:  column;
+      }
+      .rowdiv{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .larger{
+        flex-grow: .1;
+      }
+      .nav{
+        flex-grow:1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="coldiv">
+      <div>header</div>
+    	<div class="rowdiv">
+        <div class="nav1">nav</div>
+        <div class="larger" style="text-align:center;">main</div>
+        <div>aside</div>
+      </div>
+      <div>footer</div>
+
+  </body>
+</html>
+
+<!--
+
+display: flex;
+	flex-direction: column | column-reverse | row | row-reverse;
+	flex-wrap: nowrap | wrap | wrap-reverse;
+	justify-content: center | flex-start | flex-end; // align horizontally
+	align-items: center | flex-start | flex-end; // align vertically
+
+ -->
