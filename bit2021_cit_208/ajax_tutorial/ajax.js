@@ -1,5 +1,7 @@
 function myrequest(){
-  console.log(this.responseText);
+
+  document.getElementById('content').innerText  = this.responseText;
+  // console.log(this.responseText);
 }
 
 function loadContent() {
@@ -8,18 +10,15 @@ function loadContent() {
   myajaxVar.open("POST", "https://graphql.datocms.com/");
   myajaxVar.setRequestHeader("Authorization","Bearer 99ed8680e81dab4baad6db86218aff");
   body= { query:`
-  {
-  allBlogs {
-    id
-    blogTitle
-    _status
-    _firstPublishedAt
+    {
+  myWebsite {
+    address
+    contactNumber
+    ownerName
+    title
   }
-
-  _allBlogsMeta {
-    count
-  }
-}`
+}
+  `
   }
 
   myajaxVar.send(JSON.stringify(body));

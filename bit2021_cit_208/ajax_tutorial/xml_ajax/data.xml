@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classroom>
+  <teachers>
+    <teacher>
+      <fname>Saroj</fname>
+      <lname>Giri</lname>
+      <taught_subject>Microprocessor and Computer Architecture</taught_subject>
+    </teacher>
+
+  </teachers>
+  <students>
+    <student>
+      <fname>Prakriti</fname>
+      <lname>Poudel</lname>
+      <studied_subjects>
+        <subject>
+          <code>CIT208</code>
+          <name>Web Technology - 2</name>
+        </subject>
+      </studied_subjects>
+    </student>
+    <student>
+      <fname>Shristi</fname>
+      <lname>Dhakal</lname>
+      <studied_subjects>
+        <subject>
+          <code>CIT204</code>
+          <name>Microprocessor and Computer Architecture</name>
+        </subject>
+      </studied_subject>
+    </student>
+  </students>
+</classroom>
