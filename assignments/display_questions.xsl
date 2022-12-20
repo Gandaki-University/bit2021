@@ -15,22 +15,33 @@
 </html>
 </xsl:template>
 
-<xsl:template match="question">
-  <tr>
-    <th colspan="2"><xsl:value-of select="desc"/></th>
-  </tr>
-  <ol>
-  <xsl:apply-templates select="sub_questions"/>
-  </ol>
+<xsl:template match="questions">
+  <xsl:for-each select=".">
+    <tr>
+      <th><xsl:value-of select="position()"/>.</th>
+      <xsl:apply-templates/>
+    </tr>
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template match="question" name="question">
+  <td>
+    <xsl:value-of select="desc"/>
+    <xsl:apply-templates select="sub_questions"/>
+  </td>
+  <!-- <td><xsl:value-of select="submission/deadline"></td> -->
 </xsl:template>
 
 <xsl:template match="sub_questions">
+<ol>
   <xsl:for-each select="li">
-  <tr>
-    <td><li></li></td>
-    <td><xsl:value-of select="."/></td>
-  </tr>
-</xsl:for-each>
+    <!-- <tr>
+      <td><xsl:value-of select="position()"/>.</td>
+      <td><xsl:value-of select="."/></td>
+    </tr> -->
+    <li><xsl:value-of select="."/></li>
+  </xsl:for-each>
+</ol>
 </xsl:template>
 
 </xsl:stylesheet>
