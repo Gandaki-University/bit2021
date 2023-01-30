@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>Intro to JS Event Handlers</title>
+    <style>
+    p{
+      color:red;
+      height:40px;
+      background-color: yellow;
+    }
+    h1{
+      background-color: grey;
+    }
+    </style>
+
+    <script>
+      function HelloThere(){
+        alert("This is my message Call");
+      }
+    </script>
+  </head>
+  <body >
+    <p onmouseout="HelloThere();">Hello This is my P Tag</p>
+    <h1>This is my h1 tag</h1>
+    <input type="text" onkeyup="HelloThere();" />
+  </body>
+</html>
