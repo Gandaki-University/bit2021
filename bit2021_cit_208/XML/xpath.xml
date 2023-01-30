@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bib>
+    <book>
+        <publisher> Addison-Wesley </publisher>
+        <author> Serge Abiteboul </author>
+        <author>
+            <first-name> Rick </first-name>
+            <last-name> Hull </last-name>
+        </author>
+        <author> Victor Vianu </author>
+        <title> Foundations of Databases </title>
+        <year> 1995 </year>
+    </book>
+    <book price="55">
+        <publisher> Freeman </publisher>
+        <author> Jeffrey D. Ullman </author>
+        <title> Principles of Database and Knowledge Base Systems </title>
+        <year> 1998 </year>
+    </book>
+</bib>
