@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CallBack Example</title>
+</head>
+<body>
+    <h1>Enter a value</h1>
+    <form>
+      <input type="text" onchange="activateFunction()" id="input1">
+    </form>
+    <script type="text/javascript">
+      function activateFunction() {
+        console.log(document.getElementById('input1').value);
+        displayAlert( document.getElementById('input1').value, handleInteger, handleString );
+      }
+
+      function displayAlert( value, yes, no){
+        if (isNaN(parseFloat(value))){
+            no(value);
+        } else {
+            yes(parseFloat(value));
+        }
+        /*if (typeof(value) == typeof(1)){
+          yes(value);
+        }
+        if(typeof(value) == typeof("Dummy Text")){
+          no(value);
+        }*/
+      }
+
+      function handleInteger(value) {
+        alert("The value is " + (value + 10));
+      }
+
+      function handleString(value) {
+        alert("Hello" + value);
+      }
+
+    </script>
+</body>
+</html>
