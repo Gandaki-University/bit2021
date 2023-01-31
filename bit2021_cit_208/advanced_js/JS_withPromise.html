@@ -1,5 +1,7 @@
 <html>
-  <head></head>
+  <head>
+    <script src="showScript.js" charset="utf-8"></script>
+  </head>
   <body>
     <form action="">
       <label for="myInput">Enter a value here (integer or string)</label>
@@ -9,6 +11,12 @@
         <p id="Result"></p>
       </div>
     </form>
+
+    <div>
+      <h2>Script Code</h2>
+      <p id="code">
+      </p>
+    </div>
     <script>
       function CheckValue(){
       const myPromise =   new Promise(workOut)
@@ -36,6 +44,7 @@
         document.getElementById('Result').innerText = message;
         console.log(message);
       }
+
     </script>
   </body>
 </html>

@@ -1,6 +1,10 @@
 <html>
+  <head>
+    <script src="showScript.js" charset="utf-8"></script>
+  </head>
   <body>
     <h1>Initial value of Promise Function is 1 </h1>
+    <p id="code"></p>
     <script>
 new Promise(function(resolve, reject) {
     setTimeout(() => resolve(1), 1000); // (*)
