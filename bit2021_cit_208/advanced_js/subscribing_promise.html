@@ -1,0 +1,28 @@
+<html>
+  <head>
+
+  </head>
+  <body>
+    <h1>Initial value of Promise Function is 1 </h1>
+    <script>
+let promise = new Promise(function(resolve, reject) {
+  setTimeout(() => resolve(1), 1000);
+});
+
+promise.then(function(result) {
+  alert(result); // 1
+  return result * 2;
+});
+
+promise.then(function(result) {
+  alert(result); // 1
+  return result * 2;
+});
+
+promise.then(function(result) {
+  alert(result); // 1
+  return result * 2;
+});
+    </script>
+  </body>
+</html>
