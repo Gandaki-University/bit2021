@@ -1,0 +1,31 @@
+<html>
+  <head></head>
+  <body>
+    <form action="">
+      <input type="text" id="myInput" onchange="CheckValue();">
+    </form>
+    <script>
+      function CheckValue(){
+      const myPromise =   new Promise(workOut)
+          .then(displaySuccess, displayError);
+      }
+
+      workOut = ((resolve, reject) =>{
+        myval = parseInt(document.getElementById('myInput').value);
+        console.log(myval);
+        if (isNaN (myval)){
+          reject(myval);
+        } else {
+          resolve(myval);
+        }
+      })
+
+      function displaySuccess(val){
+        console.log("The value is" + val);
+      }
+      function displayError(val){
+        console.log("Error due to string + " + val);
+      }
+    </script>
+  </body>
+</html>

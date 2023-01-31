@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Form Handling</title>
+  </head>
+  <body>
+    <form action="">
+      <h1><label for="age">Age</label></h1>
+      <input type="text" name="age" id="age" onchange="checkAge();">
+    </form>
+    <script type="text/javascript">
+      checkAge = function  (){
+        userage = document.getElementById('age');
+        console.log(userage);
+
+        if (parseFloat(userage.value) < 0){
+          alert("Age can't be negative");
+        } else if (parseFloat(userage.value)>130) {
+          alert("Invalid Age Provided");
+          userage.value = 22;
+        } else if(isNaN(parseFloat(userage.value))){
+          alert("Use Numeric Values");
+          userage.value=10;
+        }
+      }
+    </script>
+  </body>
+</html>
