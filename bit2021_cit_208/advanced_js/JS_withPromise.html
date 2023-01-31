@@ -2,7 +2,12 @@
   <head></head>
   <body>
     <form action="">
-      <input type="text" id="myInput" onchange="CheckValue();">
+      <label for="myInput">Enter a value here (integer or string)</label>
+      <input type="text" id="myInput" name="myInput" onchange="CheckValue();">
+      <div>
+        <h2>Result Area</h2>
+        <p id="Result"></p>
+      </div>
     </form>
     <script>
       function CheckValue(){
@@ -11,20 +16,25 @@
       }
 
       workOut = ((resolve, reject) =>{
-        myval = parseInt(document.getElementById('myInput').value);
-        console.log(myval);
+        userVal = document.getElementById('myInput').value;
+        myval = parseInt(userVal);
+
         if (isNaN (myval)){
-          reject(myval);
+          reject(userVal);
         } else {
           resolve(myval);
         }
       })
 
       function displaySuccess(val){
-        console.log("The value is" + val);
+        message = "The value is :" + val;
+        console.log(message);
+        document.getElementById('Result').innerText = message;
       }
       function displayError(val){
-        console.log("Error due to string + " + val);
+        message = "Error due to string: " + val;
+        document.getElementById('Result').innerText = message;
+        console.log(message);
       }
     </script>
   </body>
