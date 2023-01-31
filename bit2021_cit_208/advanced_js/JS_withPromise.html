@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <script src="showScript.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <form action="">
+      <label for="myInput">Enter a value here (integer or string)</label>
+      <input type="text" id="myInput" name="myInput" onkeypress="CheckValue();" onchange="CheckValue();">
+      <div>
+        <h2>Result Area</h2>
+        <p id="Result"></p>
+      </div>
+    </form>
+
+    <div>
+      <h2>Script Code</h2>
+      <p id="code">
+      </p>
+    </div>
+    <script>
+      function CheckValue(){
+      const myPromise =   new Promise(workOut)
+          .then(displaySuccess, displayError);
+      }
+
+      workOut = ((resolve, reject) =>{
+        userVal = document.getElementById('myInput').value;
+        myval = parseInt(userVal);
+
+        if (isNaN (myval)){
+          reject(userVal);
+        } else {
+          resolve(myval);
+        }
+      })
+
+      function displaySuccess(val){
+        message = "The value is :" + val;
+        console.log(message);
+        document.getElementById('Result').innerText = message;
+      }
+      function displayError(val){
+        message = "Error due to string: " + val;
+        document.getElementById('Result').innerText = message;
+        console.log(message);
+      }
+
+    </script>
+  </body>
+</html>
