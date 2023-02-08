@@ -1,0 +1,113 @@
+<head>
+        <script src="myscript.js"></script>
+        <title> Form </title>
+        <script type="text/javascript">
+          function checkForm() {
+            var input_vars = document.getElementsByTagName('input');
+            let hobby_count = 0;
+            let gender_checked = false;
+            for (var i = 0; i < input_vars.length; i++) {
+              switch (input_vars[i].name) {
+                case 'fname':
+                  if (input_vars[i].value){} else{
+                    alert("First Name cant be empty");
+                  }
+                  break;
+                case 'lname':
+                  if (input_vars[i].value.search(' ') >= 0){
+                    alert("White space is not accepted");
+                  }
+                  break;
+                case 'gender':
+                  if (input_vars[i].checked){
+                    gender_checked += 1;
+                  }
+                  break;
+                case 'hobby[]':
+                  if (input_vars[i].checked){
+                    hobby_count += 1;
+                  }
+                  break;
+                case 'confirm':
+                  if (input_vars[i].checked){
+
+                  }else{
+                    alert("You must select the confirm field");
+                  }
+                  break;
+                default:
+                  break;
+              }
+            }
+            if (hobby_count <2){
+              alert("Minimum 2 hobbies must be selected");
+            }
+          }
+        </script>
+    </head>
+    <body>
+        <p> This * symbol indicates that you cannot leave that filed empty.</p>
+
+        <div>
+            <label for="fname"> Name *</label>
+            <input type="text" name="fname">
+            <br> <br>
+            <label for="lname">LastName:</label>
+            <input type="text" name="lname">
+        </div>
+        <br>
+
+        <div>
+        <label for="gender"> Gender *</label>
+        <input type="radio" value="Male" name="gender"> Male
+        <input type="radio" value="Female" name="gender">Female
+
+        <input type="radio" name="gender" value="others"> Others
+        </div>
+        <br>
+
+        <div>
+            <label for="to-filed"> Age:</label>
+            <input type="number">
+        </div>
+        <br>
+
+        <div>
+            <label for="to-field"> District *</label>
+            <select name="District">
+                <option value="Kaski"> Kaski</option>
+                <option value="Lumbini"> Lumbini</option>
+                <option value="Syangja"> Syangja</option>
+            </select>
+        </div>
+        <br>
+
+        <div>
+            <label for="to-field"> Hobbies: </label>
+            <input type="checkbox" value="Movies" name="hobby[]">
+            <label for="to-field"> Movies </label>
+            <input type="checkbox" name="hobby[]" value="Football">
+            <label for="to-field"> Football </label>
+            <input type="checkbox" name="hobby[]" value="Novels">
+            <label for="to-field"> Novels</label>
+            <input type="checkbox" name="hobby[]" value="Art">
+            <label for="to-field"> Art</label>
+            <input type="checkbox" name="hobby[]" value="Blogging">
+            <label for="to-field"> Blogging </label>
+            <input type="checkbox" name="hobby[]" value="Outdoors">
+            <label for="to-field"> Outdoors</label>
+        </div>
+
+        <div>
+           <input type="checkbox" name="confirm"> Confirm that the above provided inforation is correct.
+        </div>
+        <button onclick="checkForm();">Check the Form</button>
+        <br>
+
+        <div>
+            <button type="submit"> Submit </button>
+            <button type="reset"> Reset</button>
+        </div>
+
+    </body>
+</html>

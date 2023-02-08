@@ -45,9 +45,9 @@ function promiseGetWord(parityInfo) {
 }
 
 new Promise(tetheredGetNumber)
-  .then(determineParity, troubleWithGetNumber);
-  /*.then(promiseGetWord)
-  .then((info) => {
+  .then(determineParity, troubleWithGetNumber)
+  .then(promiseGetWord);
+  /*.then((info) => {
     console.log(`Got: ${info.value}, ${info.wordEvenOdd}`);
     return info;
   })

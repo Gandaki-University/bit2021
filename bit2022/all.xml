@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/bit2022/syllabus.xsl"?>
+<course>
+    <info>
+        <title> Web Application 1 </title>
+        <description> This course is designed to introduce to students to basics of HTML, CSS, JS, PHP and MYSQL</description>
+    </info>
+
+    <lessons>
+        <lesson>
+            <title>Introduction to HTML</title>
+        </lesson>
+        <lesson>
+            <title>Introduction to CSS</title>
+        </lesson>
+        <lesson>
+            <title>Introduction to Javascript</title>
+        </lesson>
+        <lesson>
+            <title>Introduction to PHP</title>
+        </lesson>
+        <lesson>
+            <title>Introduction to MYSQL</title>
+        </lesson>
+    </lessons>
+
+    <labs>
+        <lab>
+            <title>Registering a domain Name and Pointing the records to the desired host machine for HTTP Requests</title>
+            <number>1 A</number>
+            <objectives>
+                <objective>To register a free domain name amongst many different ccTLDs in .np domain.</objective>
+                <objective>To point the domain address to our desired host machine for HTTP requests.</objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_1A.pdf</file>
+            </files>
+        </lab>
+        <lab>
+            <title>HTML Tags</title>
+            <number>1 B</number>
+            <objectives>
+                <objective>To Be Familiar with HTML Tags</objective>
+                <objective>Design a complete HTML5 document for a web resource</objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_1B.pdf</file>
+            </files>
+        </lab>
+        <lab>
+            <title>HTML5 Exercise</title>
+            <number>1 C</number>
+            <objectives>
+                <objective>More Exercise on HTML</objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_1C.pdf</file>
+            </files>
+        </lab>
+    </labs>
+
+    <examples>
+    </examples>
+
+    <tutorials>
+    </tutorials>
+</course>
