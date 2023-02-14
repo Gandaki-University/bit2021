@@ -57,6 +57,80 @@
                 <file>/bit2022/assignments/web_programming_1C.pdf</file>
             </files>
         </lab>
+        <lab>
+            <title>CSS Exercise</title>
+            <number>2 A</number>
+            <objectives>
+                <objective>To learn the CSS concepts and use them in HTML for text stylings.
+                    2</objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_2A.pdf</file>
+            </files>
+        </lab>
+        <lab>
+            <title>CSS Pseudo Classes</title>
+            <number>2 B</number>
+            <objectives>
+                <objective>To learn about the box model and styling with the layouts.</objective>
+                <objective>To learn about the controls with pseudo classes</objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_2B.pdf</file>
+            </files>
+        </lab>
+        
+        <lab>
+            <title>Introduction to JavaScript</title>
+            <number>3</number>
+            <objectives>
+                <objective>To be acquainted with basic JavaScript techniques of writing applications</objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_3.pdf</file>
+            </files>
+        </lab>
+        <lab>
+            <title>JS Functions</title>
+            <number>4</number>
+            <objectives>
+                <objective>To learn about the JS Functions</objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_4.pdf</file>
+            </files>
+        </lab>
+        <lab>
+            <title>Introduction to Control Flow Statements in JavaScript</title>
+            <number>5</number>
+            <objectives>
+                <objective>To understand the basic control statements in JS.</objective>
+                <objective>To understand the basic loops and iteration statements in JS.</objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_5.pdf</file>
+            </files>
+        </lab>
+        <lab>
+            <title>JS Objects and Classes</title>
+            <number>6</number>
+            <objectives>
+                <objective></objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_6.pdf</file>
+            </files>
+        </lab>
+        <lab>
+            <title>Form Validation</title>
+            <number>7</number>
+            <objectives>
+                <objective></objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_7.pdf</file>
+            </files>
+        </lab>
     </labs>
 
     <examples>
