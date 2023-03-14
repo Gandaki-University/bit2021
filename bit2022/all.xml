@@ -131,6 +131,16 @@
                 <file>/bit2022/assignments/web_programming_7.pdf</file>
             </files>
         </lab>
+        <lab>
+            <title>PHP Exercise</title>
+            <number>8</number>
+            <objectives>
+                <objective></objective>
+            </objectives>
+            <files>
+                <file>/bit2022/assignments/web_programming_8.pdf</file>
+            </files>
+        </lab>
     </labs>
 
     <examples>
