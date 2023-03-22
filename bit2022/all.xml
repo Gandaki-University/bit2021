@@ -149,9 +149,8 @@
         <title> MYSQL </title>
         <number>*</number>
         <files>
-          <file>/bit2022/php/classroom/submitProject.php</file>
-          <file>/bit2022/php/classroom.php</file>
-        <file>/bit2022/php/classroom/projects.php</file>
+          <file>/bit2022/php/php.zip</file>
+
         </files>
 
       </lab>
