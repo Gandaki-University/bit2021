@@ -30,13 +30,13 @@
            echo "Opened database successfully\n";
         }
 
-        $sql = <<<EOF
+        $sql = "
         SELECT * FROM BITPROJECTS
-        EOF;
-        $ret = $db->exec($sql);
-        while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
-              // echo "<tr><td>". $row['ID']."</td><td>".
-              // $row['TITLE']."</td></tr>";
+        ";
+        $ret = $db->query($sql);
+        while($row = $ret->fetchArray() ) {
+              echo "<tr><td>". $row['ID']."</td><td>".
+              $row['TITLE']."</td></tr>";
            }
 
          ?>
