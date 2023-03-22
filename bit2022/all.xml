@@ -145,6 +145,16 @@
                 <file>/bit2022/assignments/web_programming_8.pdf</file>
             </files>
         </lab>
+      <lab>
+        <title> MYSQL </title>
+        <number>*</number>
+        <files>
+          <file>/bit2022/php/classroom/submitProject.php</file>
+          <file>/bit2022/php/classroom.php</file>
+        <file>/bit2022/php/classroom/projects.php</file>
+        </files>
+
+      </lab>
     </labs>
 
     <examples>
