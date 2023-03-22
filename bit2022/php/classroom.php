@@ -4,6 +4,9 @@ class MyDB extends SQLite3 {
       $this->open('bit2022.db');
    }
 }
+
+// $sqlite3 = new SQLite3();
+// $sqlite3->open('bit2022.db');
 $db = new MyDB();
 if(!$db) {
    echo $db->lastErrorMsg();
@@ -11,18 +14,18 @@ if(!$db) {
    // echo "Opened database successfully\n";
 }
 
-// $sql =<<<EOF
-//    CREATE TABLE BITPROJECTS
-//    (ID        INT PRIMARY KEY     NOT NULL,
-//    TITLE           VARCHAR(300)    NOT NULL,
-//    STUDENTS        VARCHAR(400)     NOT NULL,
-//    SUPERVISOR        VARCHAR(100),
-//    LANG            VARCHAR(300),
-//    OTHERS         VARCHAR(300)
-//    );
-// EOF;
+$sql =<<<EOF
+   CREATE TABLE BITPROJECTS2
+   (ID        VARCHAR(300),
+   TITLE           VARCHAR(300),
+   STUDENTS        VARCHAR(400),
+   SUPERVISOR        VARCHAR(100),
+   LANG            VARCHAR(300),
+   OTHERS         VARCHAR(300)
+   );
+EOF;
 //
-// $ret = $db->exec($sql);
+$ret = $db->exec($sql);
 // if(!$ret){
 //    echo $db->lastErrorMsg();
 // } else {
