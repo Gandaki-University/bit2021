@@ -93,6 +93,22 @@
     <ol>
       <xsl:for-each select="lesson">
         <li> <xsl:value-of select="title"/></li>
+        <ol>
+          <table>
+            <tr>
+              <th>S.No.</th>
+              <th>Resource File</th>
+            </tr>
+            
+              <xsl:for-each select="resources/a">
+                <tr>
+                  <td><xsl:value-of select="position()"/></td>
+                  <td><a href="{@href}"><xsl:value-of select="."></xsl:value-of></a></td>
+                </tr>
+              </xsl:for-each>
+            
+          </table>
+        </ol>
       </xsl:for-each>
     </ol>
   </xsl:template>

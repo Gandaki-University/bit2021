@@ -18,13 +18,18 @@
         </lesson>
         <lesson>
             <title>Introduction to PHP</title>
+            <resources>
+                <a href="/bit2022/php/php.zip">PHP with MYSQL Zips</a>
+            </resources>
         </lesson>
         <lesson>
             <title>Introduction to MYSQL
-              <a href="/bit2022/php/classroom/submitProject.php"> Form </a>
-              <a href="/bit2022/php/classroom.php"> Data Creation File </a>
-              <a href="/bit2022/php/classroom/projects.php"> Projects View </a>
             </title>
+            <resources>
+                <a href="/bit2022/php/classroom/submitProject.php"> Form </a>
+                <a href="/bit2022/php/classroom.php"> Data Creation File </a>
+                <a href="/bit2022/php/classroom/projects.php"> Projects View </a>
+            </resources>
         </lesson>
     </lessons>
 
@@ -145,15 +150,7 @@
                 <file>/bit2022/assignments/web_programming_8.pdf</file>
             </files>
         </lab>
-      <lab>
-        <title> MYSQL </title>
-        <number>*</number>
-        <files>
-          <file>/bit2022/php/php.zip</file>
-
-        </files>
-
-      </lab>
+      
     </labs>
 
     <examples>
