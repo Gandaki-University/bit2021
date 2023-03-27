@@ -23,13 +23,13 @@
             <title>Introduction to PHP</title>
             <resources>
                 <a href="/bit2022/php/php.zip" tags="Workshop">PHP with MYSQL Zips</a>
-                <a href="bit2022/php/lectures_borrowed/PHP-01-Overview.ppt" tags="Basic">Introduction to PHP</a>
-                <a href="bit2022/php/lectures_borrowed/PHP-02-Arrays.ppt" tags="Exam Important">PHP Arrays</a>
-                <a href="bit2022/php/lectures_borrowed/PHP-03-Functions.ppt">PHP Functions</a>
-                <a href="bit2022/php/lectures_borrowed/PHP-04-Forms.ppt" tags="Exam Important">PHP Forms</a>
-                <a href="bit2022/php/lectures_borrowed/PHP-05-Objects.ppt" tags="Advanced">PHP Objects</a>
-                <a href="bit2022/php/lectures_borrowed/PHP-07-Cookies-Sessions.ppt" tags="Project">PHP Sessions and Cookies</a>
-                <a href="bit2022/php/lectures_borrowed/PHP-09-CRUD.ppt" tags="Project">PHP CRUD Operations</a>
+                <a href="/bit2022/php/lectures_borrowed/PHP-01-Overview.ppt" tags="Basic">Introduction to PHP</a>
+                <a href="/bit2022/php/lectures_borrowed/PHP-02-Arrays.ppt" tags="Exam Important">PHP Arrays</a>
+                <a href="/bit2022/php/lectures_borrowed/PHP-03-Functions.ppt">PHP Functions</a>
+                <a href="/bit2022/php/lectures_borrowed/PHP-04-Forms.ppt" tags="Exam Important">PHP Forms</a>
+                <a href="/bit2022/php/lectures_borrowed/PHP-05-Objects.ppt" tags="Advanced">PHP Objects</a>
+                <a href="/bit2022/php/lectures_borrowed/PHP-07-Cookies-Sessions.ppt" tags="Project">PHP Sessions and Cookies</a>
+                <a href="/bit2022/php/lectures_borrowed/PHP-09-CRUD.ppt" tags="Project">PHP CRUD Operations</a>
 
             </resources>
         </lesson>
