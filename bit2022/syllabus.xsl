@@ -94,7 +94,7 @@
       <xsl:for-each select="lesson">
         <li> <xsl:value-of select="title"/></li>
         <ol>
-          <table>
+          <table border="1">
             <tr>
               <th>S.No.</th>
               <th>Resource File</th>
