@@ -98,12 +98,14 @@
             <tr>
               <th>S.No.</th>
               <th>Resource File</th>
+              <th>Tags</th>
             </tr>
             
               <xsl:for-each select="resources/a">
                 <tr>
                   <td><xsl:value-of select="position()"/></td>
                   <td><a href="{@href}"><xsl:value-of select="."></xsl:value-of></a></td>
+                  <td><xsl:value-of select="@tags"></xsl:value-of></td>
                 </tr>
               </xsl:for-each>
             

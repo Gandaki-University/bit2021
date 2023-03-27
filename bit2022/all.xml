@@ -9,6 +9,9 @@
     <lessons>
         <lesson>
             <title>Introduction to HTML</title>
+            <resources>
+                <a href="bit2022/php/lectures_borrowed/PHP-01-Intro.ppt">Introduction to Web Request</a>
+            </resources>
         </lesson>
         <lesson>
             <title>Introduction to CSS</title>
@@ -20,6 +23,14 @@
             <title>Introduction to PHP</title>
             <resources>
                 <a href="/bit2022/php/php.zip">PHP with MYSQL Zips</a>
+                <a href="bit2022/php/lectures_borrowed/PHP-01-Overview.ppt" class="href">Introduction to PHP</a>
+                <a href="bit2022/php/lectures_borrowed/PHP-02-Arrays.ppt">PHP Arrays</a>
+                <a href="bit2022/php/lectures_borrowed/PHP-03-Functions.ppt">PHP Functions</a>
+                <a href="bit2022/php/lectures_borrowed/PHP-04-Forms.ppt">PHP Forms</a>
+                <a href="bit2022/php/lectures_borrowed/PHP-05-Objects.ppt" tags="Advanced">PHP Objects</a>
+                <a href="bit2022/php/lectures_borrowed/PHP-07-Cookies-Sessions.ppt">PHP Sessions and Cookies</a>
+                <a href="bit2022/php/lectures_borrowed/PHP-09-CRUD.ppt">PHP CRUD Operations</a>
+
             </resources>
         </lesson>
         <lesson>
