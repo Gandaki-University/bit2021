@@ -36,11 +36,11 @@ $ret = $db->exec($sql);
 
 // var_dump($_POST);
 
-// $sql = <<<EOF
-//   INSERT  INTO BITPROJECTS(ID,TITLE, STUDENTS, SUPERVISOR, OTHERS) VALUES(
-//     1, "Airlines School", "Babita ", "Aishwarya", ""
-//     )
-// EOF;
+$sql = <<<EOF
+  INSERT  INTO BITPROJECTS(ID,TITLE, STUDENTS, SUPERVISOR, OTHERS) VALUES(
+    1, "Airlines School", "Babita ", "Aishwarya", ""
+    )
+EOF;
 $sql = "INSERT INTO BITPROJECTS(ID, TITLE, STUDENTS, SUPERVISOR, OTHERS) VALUES  " . $_POST['id'] . ",\"". $_POST['title']."\",\"". $_POST['students'] . "\",\"". $_POST['supervisor']."\",\"".$_POST['others']   . "\")";
 echo $sql;
 
@@ -50,11 +50,11 @@ EOF;
 
 // $_POST["title"], $_POST["students"], $_POST["supervisor"], $_POST["others"]
 $ret = $db->exec($sql);
-if($ret){
-  echo "Data Inserted Successfully";
-} else{
-  echo "Data Error";
-}
+// if($ret){
+//   echo "Data Inserted Successfully";
+// } else{
+//   echo "Data Error";
+// }
 
 $db->close();
 

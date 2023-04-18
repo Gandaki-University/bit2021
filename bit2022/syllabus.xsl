@@ -44,7 +44,7 @@
         </aside>
       </div>
       <!--week 2-->
- 
+
 
     </body>
 
@@ -53,9 +53,9 @@
 
   <xsl:template match="labs">
     <table>
-      <tr> 
-        <th>S.No.</th> 
-        <th>Number</th> 
+      <tr>
+        <th>S.No.</th>
+        <th>Number</th>
         <th>Title</th>
         <th>Objectives</th>
         <th>Lab File</th>
@@ -78,7 +78,7 @@
       <xsl:for-each select="objectives">
         <li><xsl:value-of select="."/></li>
       </xsl:for-each>
-      
+
     </td>
     <td>
     <ol><xsl:for-each select="files">
@@ -93,6 +93,11 @@
     <ol>
       <xsl:for-each select="lesson">
         <li> <xsl:value-of select="title"/></li>
+        <ul>
+          <xsl:for-each select="title">
+            <xsl:value-of select="a"/>
+          </xsl:for-each>
+        </ul>
       </xsl:for-each>
     </ol>
   </xsl:template>
