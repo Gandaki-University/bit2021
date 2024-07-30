@@ -10,14 +10,23 @@
         <lesson>
             <title>Introduction to HTML</title>
             <resources>
-                <a href="bit2022/php/lectures_borrowed/PHP-01-Intro.ppt">Introduction to Web Request</a>
+                <a href="/bit2022/php/lectures_borrowed/PHP-01-Intro.ppt">Introduction to Web Request</a>
+                <a href="/bit2022/html/MarkupLanguages.ppt"> Introduction to Markup Language </a>
+                <a href="/bit2022/html/WebEssentials.ppt"> Introduction to Essentials of Web Programming </a>
             </resources>
         </lesson>
         <lesson>
             <title>Introduction to CSS</title>
+            <resources>
+                <a href="/bit2022/css/CSS.ppt"> CSS Fundamentals </a>
+            </resources>
         </lesson>
         <lesson>
             <title>Introduction to Javascript</title>
+            <resources>
+                <a href="/bit2022/js/JavaScript.ppt">JavaScript Fundamentals </a>
+                <a href="/bit2022/js/DOM.ppt"> Introduction to Document Object Model (DOM)</a>
+            </resources>
         </lesson>
         <lesson>
             <title>Introduction to PHP</title>
