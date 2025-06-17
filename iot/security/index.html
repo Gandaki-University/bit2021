@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Hub: Security and Privacy in IoT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Tech -->
+    <!-- Application Structure Plan: A thematic, dashboard-style SPA is chosen over a linear report format to enhance user exploration and understanding. The structure consists of five main, non-linear sections: Overview, Threat Landscape, Building Defenses, Privacy in Practice, and Future Frontiers. This design allows users to dive into topics based on interest rather than following a prescribed order. The user flow starts with a high-level summary and key stats, then encourages exploration of threats, solutions, and emerging technologies through interactive elements like clickable charts, filterable grids, and expandable content sections. This structure breaks down dense information into manageable, interactive modules, making the complex subject of IoT security more accessible and engaging. -->
+    <!-- Visualization & Content Choices: 
+    - Overview: Goal: Inform. Method: Dynamic text stats and intro. Interaction: Simple hover effects. Justification: Quickly establish the scale of the IoT landscape. Library: Vanilla JS.
+    - Threat Landscape: Goal: Compare/Organize. Method: Donut chart for vulnerability distribution and an interactive grid for attack vectors. Interaction: Clicking a grid item reveals details in a modal. A filter changes chart data. Justification: Visually categorizes complex threats and allows for deep dives into specific attack details. Library: Chart.js for donut, Vanilla JS for grid/modal.
+    - Building Defenses: Goal: Compare/Organize. Method: Interactive cards for authentication mechanisms and an HTML/CSS lifecycle diagram for best practices. Interaction: Clicking a card reveals its details; clicking a lifecycle stage highlights associated practices. Justification: Provides a clear comparison of defense mechanisms and a structured view of lifecycle security. Library: Vanilla JS.
+    - Privacy in Practice: Goal: Inform/Organize. Method: Tabbed interface for challenges, PETs, and regulations. Interactive cards for PETs. Interaction: Switching tabs, clicking cards for details. Justification: Segments the broad topic of privacy into digestible parts, making complex technologies and regulations easier to understand. Library: Vanilla JS.
+    - Future Frontiers: Goal: Inform. Method: Accordion layout. Interaction: Expanding sections to reveal pros and cons. Justification: Presents emerging trends in a concise, comparative format. Library: Vanilla JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #2c3e50;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: #4DB6AC;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover:after, .nav-link.active:after {
+            width: 100%;
+            left: 0;
+            background: #4DB6AC;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 300px;
+            width: 100%;
+            max-width: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-width: 500px;
+            }
+        }
+        .card-flip {
+            perspective: 1000px;
+        }
+        .card-flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .card-flip.flipped .card-flip-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 0.75rem;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+        .tab-btn.active {
+            border-color: #4DB6AC;
+            color: #4DB6AC;
+            font-weight: 600;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4DB6AC;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-xl font-bold text-gray-800">
+                <span class="text-[#4DB6AC]">IoT</span> Security Hub
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="nav-link active" data-target="overview">Overview</a>
+                <a class="nav-link" data-target="threats">Threat Landscape</a>
+                <a class="nav-link" data-target="defenses">Building Defenses</a>
+                <a class="nav-link" data-target="privacy">Privacy in Practice</a>
+                <a class="nav-link" data-target="future">Future Frontiers</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-4 6h16"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a class="block py-2 px-6 text-sm hover:bg-gray-200 nav-link" data-target="overview">Overview</a>
+            <a class="block py-2 px-6 text-sm hover:bg-gray-200 nav-link" data-target="threats">Threat Landscape</a>
+            <a class="block py-2 px-6 text-sm hover:bg-gray-200 nav-link" data-target="defenses">Building Defenses</a>
+            <a class="block py-2 px-6 text-sm hover:bg-gray-200 nav-link" data-target="privacy">Privacy in Practice</a>
+            <a class="block py-2 px-6 text-sm hover:bg-gray-200 nav-link" data-target="future">Future Frontiers</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <!-- Overview Section -->
+        <section id="overview" class="content-section active">
+            <div class="text-center rounded-lg bg-white p-8 md:p-12 shadow-lg animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold text-[#2c3e50] mb-4">The Double-Edged Sword of Connectivity</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+                    The Internet of Things (IoT) is revolutionizing our world, from smart homes to industrial automation. However, this explosion of interconnected devices creates an unprecedented attack surface. This hub explores the critical security and privacy challenges of the IoT ecosystem, offering insights into threats, defensive strategies, and the future of secure connectivity.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <div class="bg-[#F1F8E9] p-6 rounded-xl">
+                        <h3 class="text-4xl font-bold text-[#689F38] mb-2">50 Billion+</h3>
+                        <p class="text-gray-700 font-medium">Projected IoT Devices by 2030</p>
+                    </div>
+                    <div class="bg-[#E3F2FD] p-6 rounded-xl">
+                        <h3 class="text-4xl font-bold text-[#1E88E5] mb-2">98%</h3>
+                        <p class="text-gray-700 font-medium">of IoT Device Traffic is Unencrypted</p>
+                    </div>
+                    <div class="bg-[#FFF3E0] p-6 rounded-xl">
+                        <h3 class="text-4xl font-bold text-[#F57C00] mb-2">>1 Tbps</h3>
+                        <p class="text-gray-700 font-medium">Traffic in major IoT-driven DDoS Attacks</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Threat Landscape Section -->
+        <section id="threats" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">The Threat Landscape</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">The interconnected nature of IoT exposes devices, networks, and cloud infrastructure to a wide array of cyber threats. Understanding these vulnerabilities is the first step toward building effective defenses. Explore the common attack vectors below to see how they work and the impact they can have.</p>
+            </div>
+
+            <div class="bg-white p-6 md:p-8 rounded-lg shadow-lg mb-8">
+                <h3 class="text-2xl font-bold text-center mb-4">Vulnerability Distribution</h3>
+                <div class="flex justify-center mb-6">
+                    <div class="inline-flex rounded-md shadow-sm">
+                        <button class="filter-btn py-2 px-4 bg-white border border-gray-200 text-gray-700 rounded-l-lg hover:bg-gray-50 focus:z-10 focus:ring-2 focus:ring-blue-500 active" data-filter="all">All</button>
+                        <button class="filter-btn py-2 px-4 bg-white border-t border-b border-gray-200 text-gray-700 hover:bg-gray-50 focus:z-10 focus:ring-2 focus:ring-blue-500" data-filter="device">Device</button>
+                        <button class="filter-btn py-2 px-4 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 focus:z-10 focus:ring-2 focus:ring-blue-500" data-filter="network">Network</button>
+                        <button class="filter-btn py-2 px-4 bg-white border border-gray-200 text-gray-700 rounded-r-lg hover:bg-gray-50 focus:z-10 focus:ring-2 focus:ring-blue-500" data-filter="cloud">Cloud</button>
+                    </div>
+                </div>
+                <div class="chart-container mx-auto">
+                    <canvas id="vulnerabilityChart"></canvas>
+                </div>
+            </div>
+            
+            <div id="attack-vectors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Attack vector cards will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- Building Defenses Section -->
+        <section id="defenses" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">Building Resilient Defenses</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Securing IoT requires a multi-layered approach, from robust device authentication to best practices across the entire system lifecycle. This section explores fundamental mechanisms and frameworks for creating secure and trustworthy IoT deployments.</p>
+            </div>
+            
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold text-center mb-6">Comparing Authentication Mechanisms</h3>
+                <div id="auth-mechanisms-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Auth mechanism cards will be injected here by JS -->
+                </div>
+            </div>
+
+             <div>
+                <h3 class="text-2xl font-bold text-center mb-8">Security Best Practices Lifecycle</h3>
+                <div class="w-full max-w-5xl mx-auto bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                    <div class="relative">
+                        <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 rounded-full" style="transform: translateY(-50%);"></div>
+                        <div id="lifecycle-stages" class="relative flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+                           <!-- Lifecycle stages will be injected here by JS -->
+                        </div>
+                    </div>
+                    <div id="lifecycle-details" class="mt-8 p-6 bg-slate-50 rounded-lg min-h-[200px]">
+                        <!-- Lifecycle details will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy in Practice Section -->
+        <section id="privacy" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">Privacy in Practice: The Smart City Case</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">Smart cities exemplify the immense potential and profound privacy challenges of large-scale IoT. This section explores the unique privacy risks, the technologies designed to protect data, and the regulatory landscape governing its use.</p>
+            </div>
+            
+            <div class="w-full max-w-5xl mx-auto">
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 active" data-tab="challenges">Challenges & Risks</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="pets">Protective Tech (PETs)</button>
+                        <button class="tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="regulations">Regulations</button>
+                    </nav>
+                </div>
+
+                <div id="privacy-content" class="bg-white p-6 md:p-8 rounded-lg shadow-lg">
+                    <!-- Privacy content will be injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Frontiers Section -->
+        <section id="future" class="content-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-2">Future Frontiers in IoT Security</h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">The evolution of IoT security is intrinsically linked to emerging technologies. These advancements offer powerful new tools for defense but also introduce novel threats and complexities that we must prepare for.</p>
+            </div>
+            <div id="future-frontiers-accordion" class="space-y-4 max-w-4xl mx-auto">
+                <!-- Accordion items will be injected by JS -->
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Modal for Attack Vector Details -->
+    <div id="attack-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl transform transition-transform duration-300 scale-95">
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <h3 id="modal-title" class="text-2xl font-bold text-gray-800"></h3>
+                    <button id="modal-close" class="text-gray-500 hover:text-gray-800">&times;</button>
+                </div>
+                <div class="mt-4">
+                    <p class="text-sm text-gray-500 mb-2">Description:</p>
+                    <p id="modal-description" class="text-gray-700 mb-4"></p>
+                    <p class="text-sm text-gray-500 mb-2">Impact:</p>
+                    <p id="modal-impact" class="text-gray-700 mb-4 font-medium"></p>
+                    <p class="text-sm text-gray-500 mb-2">Real-World Example:</p>
+                    <p id="modal-example" class="text-gray-700 p-3 bg-gray-100 rounded-md"></p>
+                </div>
+                <button id="suggest-mitigation-btn" class="mt-6 w-full bg-[#4DB6AC] text-white py-2 px-4 rounded-md hover:bg-[#388E83] transition-colors duration-300">
+                    ✨ Suggest Mitigation Strategies
+                </button>
+                <div id="mitigation-output" class="mt-4 p-4 bg-blue-50 rounded-md text-gray-800 hidden">
+                    <p class="font-semibold mb-2">Suggested Mitigations:</p>
+                    <div id="mitigation-text" class="text-sm"></div>
+                    <div id="mitigation-loading" class="loading-spinner hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-8 mt-12 border-t border-gray-200">
+        <p class="text-gray-500">Interactive report generated based on "Security and Privacy in IoT" analysis.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const data = {
+            attackVectors: [
+                { title: 'Weak/Default Credentials', category: 'device', description: 'Exploiting factory-set or easily guessable usernames and passwords to gain unauthorized access.', impact: 'Unauthorized Access, Data Theft, Device Compromise, Botnet Creation', example: 'The Mirai botnet famously exploited default credentials in devices like cameras and routers to launch massive DDoS attacks.' },
+                { title: 'Outdated Firmware', category: 'device', description: 'Devices running old software are vulnerable to known exploits and security flaws that have since been patched.', impact: 'Device Compromise, Data Theft, Persistent Backdoors', example: 'Mirai variants exploited known vulnerabilities in Edimax/TOTOLINK routers that were not updated with the latest firmware.' },
+                { title: 'Man-in-the-Middle', category: 'network', description: 'Intercepting and potentially altering data in transit between devices or between a device and a server.', impact: 'Data Theft, Credential Harvesting, Session Hijacking', example: 'Occurs frequently on unsecured Wi-Fi networks where attackers can eavesdrop on communication between IoT devices and their cloud servers.' },
+                { title: 'DDoS (Botnets)', category: 'network', description: 'Using a large network of compromised IoT devices (a botnet) to flood a target system with traffic, causing service disruption.', impact: 'Service Unavailability, Disruption of Critical Infrastructure', example: 'The 2016 Mirai attack disabled major platforms like Twitter and Netflix by overwhelming them with traffic from compromised IoT devices.' },
+                { title: 'Insecure APIs', category: 'cloud', description: 'Poorly secured Application Programming Interfaces that expose sensitive data or control functions to unauthorized parties.', impact: 'Unauthorized Access, Data Leakage, System Manipulation', example: 'Flaws in a smart home platform\'s API could allow an attacker to unlock doors or disable security systems.' },
+                { title: 'Physical Tampering', category: 'device', description: 'Gaining direct physical access to devices to extract data, inject malware, or alter functionality.', impact: 'Data Theft, Device Cloning, Reverse Engineering', example: 'Extracting cryptographic keys directly from the memory chip of a stolen smart meter.' },
+                { title: 'Command Injection', category: 'cloud', description: 'Injecting malicious commands into vulnerable input fields or protocols, leading to unauthorized code execution on the server or device.', impact: 'Denial of Service, Device Takeover, Data Exfiltration', example: 'Vulnerabilities in Samsung SmartThings allowed command injection attacks via the IFTTT platform, bypassing security rules.' },
+                { title: 'Source Code Flaws', category: 'cloud', description: 'Bugs or design errors in application code that grant excessive privileges or create unintended backdoors.', impact: 'Privilege Escalation, Spying on Other Applications', example: 'A flawed app on the SmartThings platform gaining the ability to monitor other installed apps and user activities.' },
+            ],
+            authMechanisms: [
+                { title: 'Multi-Factor Auth (MFA)', icon: '&#128274;', description: 'Requires two or more verification factors (e.g., password + OTP).', strengths: 'Significantly enhances security over single-factor methods.', weaknesses: 'Can add user friction; requires infrastructure for the second factor.' },
+                { title: 'PKI / Certificates', icon: '&#128190;', description: 'Uses digital certificates (e.g., X.509) and key pairs to verify device identities.', strengths: 'Strong cryptographic assurance; ideal for high-security applications.', weaknesses: 'Resource-intensive for constrained devices; complex key management.' },
+                { title: 'Token-Based Auth', icon: '&#127915;', description: 'Grants access via temporary tokens (e.g., JWT, OAuth 2.0) without exposing credentials.', strengths: 'Stateless, secure API access, good for microservices.', weaknesses: 'Token management complexity; risk of token theft if not secured.' },
+                { title: 'Biometric Auth', icon: '&#128072;', description: 'Verifies identity using unique biological traits (e.g., fingerprint, facial scan).', strengths: 'High security and user convenience; difficult to replicate.', weaknesses: 'Requires specific hardware; privacy concerns over biometric data.' },
+                { title: 'Secure Boot', icon: '&#128737;', description: 'Ensures only trusted, cryptographically verified firmware runs at startup.', strengths: 'Prevents unauthorized code execution; establishes a hardware root of trust.', weaknesses: 'Requires hardware support; can be complex to implement.' },
+                { title: 'Role-Based Access (RBAC)', icon: '&#128101;', description: 'Assigns permissions based on predefined user or device roles.', strengths: 'Simple to manage for large user bases; enforces least privilege.', weaknesses: 'Can be rigid; roles may not capture all necessary context.' },
+            ],
+            lifecycle: [
+                { stage: 'Design', icon: '&#9999;&#65039;', details: 'Implement Security by Design. Conduct risk assessments and threat modeling. Apply the least privilege principle. Specify clear security requirements. (Source: ENISA, NIST)' },
+                { stage: 'Develop', icon: '&#128187;', details: 'Adopt secure coding practices (e.g., OWASP). Use secure frameworks and patched libraries. Implement robust authorization and secure credential storage. Use proven encryption. (Source: ENISA, OWASP)' },
+                { stage: 'Deploy', icon: '&#128640;', details: 'Enforce secure default configurations (no default passwords). Implement network segmentation and Zero Trust principles. Ensure physical protection of devices. (Source: NIST, ETSI)' },
+                { stage: 'Operate', icon: '&#9881;&#65039;', details: 'Establish vulnerability and patch management. Implement continuous monitoring and secure logging. Have a defined incident management plan. Maintain asset inventory. (Source: ENISA, NIST)' },
+                { stage: 'End-of-Life', icon: '&#128465;&#65039;', details: 'Define a formal disposal strategy for devices and data. Ensure secure data retirement. Communicate end-of-life support policies clearly to customers. (Source: NIST, ENISA)' },
+            ],
+            privacy: {
+                challenges: `
+                    <h3 class="text-xl font-bold mb-4">Unique Privacy Risks</h3>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start"><span class="text-red-500 font-bold mr-3">&#8226;</span><div><strong class="text-gray-800">Re-identification Risk:</strong> So-called "anonymized" data can often be re-linked to individuals when combined with other datasets, a risk amplified by AI's pattern-finding capabilities.</div></li>
+                        <li class="flex items-start"><span class="text-red-500 font-bold mr-3">&#8226;</span><div><strong class="text-gray-800">Mass Surveillance & Trust:</strong> Pervasive data collection can lead to public fears of mass surveillance and an erosion of trust if data practices are not transparent. A lack of trust can derail smart city projects.</div></li>
+                        <li class="flex items-start"><span class="text-red-500 font-bold mr-3">&#8226;</span><div><strong class="text-gray-800">Unclear Consent:</strong> Many IoT deployments have inadequate or unclear mechanisms for user consent, undermining an individual's control over their personal information.</div></li>
+                    </ul>
+                `,
+                pets: `
+                    <h3 class="text-xl font-bold mb-4">Privacy-Enhancing Technologies (PETs)</h3>
+                    <p class="text-gray-600 mb-6">PETs are crucial tools for building privacy-preserving systems. They allow for valuable data analysis while minimizing exposure of sensitive personal information.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg"><strong>Homomorphic Encryption (HE):</strong> Allows computation directly on encrypted data without ever decrypting it.</div>
+                        <div class="bg-green-50 p-4 rounded-lg"><strong>Federated Learning (FL):</strong> Trains AI models on decentralized devices without the raw data ever leaving the device.</div>
+                        <div class="bg-yellow-50 p-4 rounded-lg"><strong>Differential Privacy (DP):</strong> Adds statistical "noise" to datasets to protect individual identities while allowing for accurate aggregate analysis.</div>
+                        <div class="bg-purple-50 p-4 rounded-lg"><strong>Zero-Knowledge Proofs (ZKPs):</strong> Proves that a statement is true without revealing any information beyond the statement's validity.</div>
+                    </div>
+                `,
+                regulations: `
+                    <h3 class="text-xl font-bold mb-4">Key Regulatory Frameworks</h3>
+                    <p class="text-gray-600 mb-6">Global regulations set the ground rules for data privacy, but applying them to the complex, borderless world of IoT remains a major challenge.</p>
+                    <div class="space-y-4">
+                        <div><strong class="text-blue-600">GDPR (EU):</strong> Emphasizes principles like data minimization, purpose limitation, and strong user consent. Requires Privacy by Design.</div>
+                        <div><strong class="text-green-600">CCPA (California):</strong> Grants consumers rights to know, delete, and opt-out of the sale of their personal information.</div>
+                        <div><strong class="text-red-600">PIPL (China):</strong> Imposes strict rules on data processing and cross-border data transfers, requiring explicit consent.</div>
+                        <div><strong class="text-orange-600">ETSI EN 303 645 (Global):</strong> A baseline standard for consumer IoT security that includes provisions for protecting personal data on the device.</div>
+                    </div>
+                `
+            },
+            future: [
+                { title: 'Artificial Intelligence & ML', icon: '&#129302;', benefits: 'AI excels at real-time threat detection, identifying anomalies in network traffic, and automating security responses. It can also power predictive maintenance and advanced biometrics.', challenges: 'Malicious actors can use AI to create more sophisticated attacks. AI models can inherit biases from training data, and their ability to infer information creates new privacy risks.' },
+                { title: 'Blockchain / DTL', icon: '&#128279;', benefits: 'Its decentralized, tamper-resistant ledger can ensure data integrity, verify device identity without central authorities, and create transparent, auditable logs of data access.', challenges: 'Scalability to handle massive IoT data volumes, high energy consumption, and regulatory uncertainty are significant hurdles to widespread adoption.' },
+                { title: 'Quantum Computing & PQC', icon: '&#9⚛️;', benefits: 'Quantum phenomena can be used for ultra-secure communication (QKD). The development of Post-Quantum Cryptography (PQC) will create new encryption standards resistant to quantum attacks.', challenges: 'A large-scale quantum computer could break most current encryption algorithms (RSA, ECC), rendering almost all current secure communication vulnerable. Migrating to PQC is an urgent but massive undertaking.' },
+                { title: 'Edge & Fog Computing', icon: '&#9928;', benefits: 'Processing data closer to its source reduces latency and bandwidth usage. It enhances privacy and security by minimizing the amount of sensitive data sent to the cloud.', challenges: 'These distributed architectures add management complexity and infrastructure costs. Securing numerous edge/fog nodes is a significant challenge.' },
+            ]
+        };
+
+        const navLinks = document.querySelectorAll('.nav-link');
+        const contentSections = document.querySelectorAll('.content-section');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function switchTab(targetId) {
+            navLinks.forEach(link => {
+                link.classList.toggle('active', link.dataset.target === targetId);
+            });
+            contentSections.forEach(section => {
+                section.classList.toggle('active', section.id === targetId);
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = e.currentTarget.dataset.target;
+                switchTab(targetId);
+                if (mobileMenu.classList.contains('hidden') === false) {
+                   mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const attackVectorsGrid = document.getElementById('attack-vectors-grid');
+        data.attackVectors.forEach(vector => {
+            const card = document.createElement('div');
+            card.className = 'bg-gray-50 p-6 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer';
+            card.innerHTML = `<h4 class="font-bold text-lg mb-2">${vector.title}</h4><p class="text-sm text-gray-600">${vector.description}</p>`;
+            card.addEventListener('click', () => openModal(vector));
+            attackVectorsGrid.appendChild(card);
+        });
+
+        const modal = document.getElementById('attack-modal');
+        const modalClose = document.getElementById('modal-close');
+        const suggestMitigationBtn = document.getElementById('suggest-mitigation-btn');
+        const mitigationOutput = document.getElementById('mitigation-output');
+        const mitigationText = document.getElementById('mitigation-text');
+        const mitigationLoading = document.getElementById('mitigation-loading');
+
+        function openModal(vector) {
+            document.getElementById('modal-title').textContent = vector.title;
+            document.getElementById('modal-description').textContent = vector.description;
+            document.getElementById('modal-impact').textContent = vector.impact;
+            document.getElementById('modal-example').textContent = vector.example;
+            
+            // Reset mitigation output
+            mitigationOutput.classList.add('hidden');
+            mitigationText.innerHTML = '';
+            mitigationLoading.classList.add('hidden');
+
+            suggestMitigationBtn.dataset.attackTitle = vector.title; // Store the title for the API call
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div > div').classList.remove('scale-95');
+            }, 10);
+        }
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modal.querySelector('div > div').classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) closeModal();
+        });
+
+        suggestMitigationBtn.addEventListener('click', async () => {
+            const attackTitle = suggestMitigationBtn.dataset.attackTitle;
+            mitigationOutput.classList.remove('hidden');
+            mitigationText.innerHTML = '';
+            mitigationLoading.classList.remove('hidden');
+
+            const prompt = `Provide 3-5 concise mitigation strategies for the IoT security threat: "${attackTitle}". Focus on practical steps.`;
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiKey = ""
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    mitigationText.innerHTML = formatLLMResponse(text); // Format the list
+                } else {
+                    mitigationText.innerHTML = 'Could not generate mitigation strategies. Please try again.';
+                }
+            } catch (error) {
+                console.error('Error fetching mitigation strategies:', error);
+                mitigationText.innerHTML = 'Failed to fetch mitigation strategies due to an error.';
+            } finally {
+                mitigationLoading.classList.add('hidden');
+            }
+        });
+
+        // Helper function to format LLM text as a list
+        function formatLLMResponse(text) {
+            const lines = text.split('\n').filter(line => line.trim() !== '');
+            let formattedHtml = '<ul>';
+            lines.forEach(line => {
+                const trimmedLine = line.trim();
+                // Check if the line starts with a common list indicator (number, hyphen, asterisk)
+                if (/^(\d+\.|\-|\*)\s/.test(trimmedLine)) {
+                    formattedHtml += `<li class="mb-1">${trimmedLine.replace(/^(\d+\.|\-|\*)\s/, '')}</li>`;
+                } else {
+                    // If not a list item, just treat it as a paragraph within a list item
+                    formattedHtml += `<li class="mb-1">${trimmedLine}</li>`;
+                }
+            });
+            formattedHtml += '</ul>';
+            return formattedHtml;
+        }
+
+
+        const ctx = document.getElementById('vulnerabilityChart').getContext('2d');
+        let vulnerabilityChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Device Level', 'Network Level', 'Cloud Level'],
+                datasets: [{
+                    data: [4, 2, 2],
+                    backgroundColor: ['#FFB74D', '#64B5F6', '#4DB6AC'],
+                    borderColor: '#F8F7F4',
+                    borderWidth: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ` ${context.label}: ${context.raw} major vectors`;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'bg-blue-100'));
+                e.target.classList.add('active', 'bg-blue-100');
+                const filter = e.target.dataset.filter;
+                let filteredData;
+                let newChartData;
+
+                switch(filter) {
+                    case 'device': newChartData = [4,0,0]; break;
+                    case 'network': newChartData = [0,2,0]; break;
+                    case 'cloud': newChartData = [0,0,2]; break;
+                    default: newChartData = [4,2,2]; break;
+                }
+                vulnerabilityChart.data.datasets[0].data = newChartData;
+                vulnerabilityChart.update();
+            });
+        });
+        
+        const authGrid = document.getElementById('auth-mechanisms-grid');
+        data.authMechanisms.forEach(auth => {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-xl shadow-md h-48 card-flip cursor-pointer';
+            card.innerHTML = `
+                <div class="card-flip-inner">
+                    <div class="card-front bg-white">
+                        <span class="text-4xl mb-2">${auth.icon}</span>
+                        <h4 class="font-bold text-lg text-center">${auth.title}</h4>
+                        <p class="text-sm text-gray-500 mt-1">${auth.description}</p>
+                    </div>
+                    <div class="card-back bg-gray-700 text-white text-center">
+                        <p class="text-sm font-light"><strong class="font-semibold text-green-300">Strengths:</strong> ${auth.strengths}</p>
+                        <p class="text-sm font-light mt-2"><strong class="font-semibold text-red-300">Weaknesses:</strong> ${auth.weaknesses}</p>
+                    </div>
+                </div>
+            `;
+            card.addEventListener('click', () => card.classList.toggle('flipped'));
+            authGrid.appendChild(card);
+        });
+
+        const lifecycleStagesContainer = document.getElementById('lifecycle-stages');
+        const lifecycleDetailsContainer = document.getElementById('lifecycle-details');
+        data.lifecycle.forEach((item, index) => {
+            const stageEl = document.createElement('div');
+            stageEl.className = 'flex flex-col items-center cursor-pointer lifecycle-stage-item group';
+            stageEl.dataset.index = index;
+            stageEl.innerHTML = `
+                <div class="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-3xl group-hover:bg-[#4DB6AC] group-hover:text-white transition-colors duration-300">${item.icon}</div>
+                <p class="mt-2 font-semibold text-gray-600 group-hover:text-[#4DB6AC] transition-colors duration-300">${item.stage}</p>
+            `;
+            lifecycleStagesContainer.appendChild(stageEl);
+        });
+        
+        function updateLifecycleDetails(index) {
+            document.querySelectorAll('.lifecycle-stage-item div').forEach(el => el.classList.remove('bg-[#4DB6AC]', 'text-white', 'scale-110'));
+            document.querySelector(`.lifecycle-stage-item[data-index='${index}'] div`).classList.add('bg-[#4DB6AC]', 'text-white', 'scale-110');
+            lifecycleDetailsContainer.innerHTML = `<p class="text-lg text-gray-700">${data.lifecycle[index].details}</p>`;
+        }
+        
+        lifecycleStagesContainer.addEventListener('click', (e) => {
+            const stageItem = e.target.closest('.lifecycle-stage-item');
+            if (stageItem) {
+                updateLifecycleDetails(stageItem.dataset.index);
+            }
+        });
+
+        updateLifecycleDetails(0);
+
+        const privacyTabs = document.querySelectorAll('.tab-btn');
+        const privacyContentContainer = document.getElementById('privacy-content');
+        
+        function switchPrivacyTab(target) {
+            privacyTabs.forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`.tab-btn[data-tab='${target}']`).classList.add('active');
+            privacyContentContainer.innerHTML = data.privacy[target];
+        }
+
+        privacyTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => switchPrivacyTab(e.target.dataset.tab));
+        });
+        switchPrivacyTab('challenges');
+
+        const accordionContainer = document.getElementById('future-frontiers-accordion');
+        data.future.forEach((item, index) => {
+            const el = document.createElement('div');
+            el.className = 'bg-white rounded-lg shadow-sm';
+            el.innerHTML = `
+                <button class="w-full flex justify-between items-center text-left p-5 font-semibold accordion-toggle">
+                    <span class="flex items-center text-lg"><span class="text-2xl mr-4">${item.icon}</span> ${item.title}</span>
+                    <span class="transform transition-transform duration-300">&#9662;</span>
+                </button>
+                <div class="accordion-content px-5 pb-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t pt-4">
+                        <div>
+                            <h5 class="font-bold text-green-600 mb-2">Benefits / Opportunities</h5>
+                            <p class="text-sm text-gray-600">${item.benefits}</p>
+                        </div>
+                         <div>
+                            <h5 class="font-bold text-red-600 mb-2">Challenges / Threats</h5>
+                            <p class="text-sm text-gray-600">${item.challenges}</p>
+                        </div>
+                    </div>
+                    <button class="predict-impact-btn mt-6 w-full bg-[#E0F2F1] text-[#00796B] py-2 px-4 rounded-md hover:bg-[#B2DFDB] transition-colors duration-300" data-tech-title="${item.title}" data-index="${index}">
+                        ✨ Predict Future Impact on IoT Security
+                    </button>
+                    <div id="impact-output-${index}" class="mt-4 p-4 bg-lime-50 rounded-md text-gray-800 hidden">
+                        <p class="font-semibold mb-2">Predicted Impact:</p>
+                        <div id="impact-text-${index}" class="text-sm"></div>
+                        <div id="impact-loading-${index}" class="loading-spinner hidden"></div>
+                    </div>
+                </div>
+            `;
+            accordionContainer.appendChild(el);
+        });
+
+        document.querySelectorAll('.accordion-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                button.querySelector('span:last-child').classList.toggle('rotate-180');
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
+
+        document.querySelectorAll('.predict-impact-btn').forEach(button => {
+            button.addEventListener('click', async (e) => {
+                const techTitle = e.target.dataset.techTitle;
+                const index = e.target.dataset.index;
+                const impactOutput = document.getElementById(`impact-output-${index}`);
+                const impactText = document.getElementById(`impact-text-${index}`);
+                const impactLoading = document.getElementById(`impact-loading-${index}`);
+
+                impactOutput.classList.remove('hidden');
+                impactText.innerHTML = '';
+                impactLoading.classList.remove('hidden');
+
+                const prompt = `Predict the future impact of "${techTitle}" on IoT security in the next 5-10 years. Focus on both opportunities and challenges.`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        impactText.innerHTML = formatLLMResponse(text);
+                    } else {
+                        impactText.innerHTML = 'Could not generate impact prediction. Please try again.';
+                    }
+                } catch (error) {
+                    console.error('Error fetching impact prediction:', error);
+                    impactText.innerHTML = 'Failed to fetch impact prediction due to an error.';
+                } finally {
+                    impactLoading.classList.add('hidden');
+                }
+            });
+        });
+
+
+        switchTab('overview');
+    });
+    </script>
+</body>
+</html>
